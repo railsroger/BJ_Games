@@ -4,12 +4,13 @@ module Hand
     points = 0
 
     cards.each do |card|
-      points += 10 if card.value == 'A'
-                   elsif card.value.to_i.zero?
-                     10
-                   else
-                     card.value.to_i
-                   end
+      points += if card.value == 'A'
+                   10
+                elsif card.value.to_i.zero?
+                   10
+                else
+                 card.value.to_i
+                end
     end
     cards.select { |card| card.value == 'A' }.count.times do
       points -= 10 if points > 21
