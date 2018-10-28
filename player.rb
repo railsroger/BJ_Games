@@ -1,6 +1,7 @@
 class Palayer
   attr_accessor :cards, :name, :bank
-
+  include Hand
+  
   def initialize(name, bank)
     @name = name
     @bank = bank
