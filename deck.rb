@@ -1,5 +1,8 @@
 require_relative 'card'
 
+SYMB = %w{+ <3 ^ <>}
+SUITS = %w{A K Q J}
+
 class Deck
   attr_reader :cards
 
@@ -11,11 +14,11 @@ class Deck
 
   def create_cards
     cards = []
-    %w(+ <3 ^ <>).each do |suit|
+    SYMB.each do |suit|
       (2..10).each do |number|
         cards << Card.new(suit, number)
       end
-      %w(A K Q J).each do |namecard|
+      SUITS.each do |namecard|
         cards << Card.new(suit, namecard)
       end
     end

@@ -2,49 +2,17 @@ require_relative 'money'
 require_relative 'deck'
 require_relative 'player'
 require_relative 'card'
+require_relative 'hand'
 
 class Game
   attr_accessor :player, :dealer, :deck, :kassa
 
-  def initialize
+  def initialize(player, dealer)
+    @player = player
+    @dealer = dealer
     @kassa = Money.new
     @deck = Deck.new
-    @player = Player.new('Player', 100)
-    @dealer = Player.new('Dealer', 100)
   end
-
-  def start_game
-    puts 'What is your name?'
-    player.name = gets.chomp
-
-    loop do
-      puts "Want to play in Black Jack, Mr. #{player.name}?"
-      puts 'Yes - 1, No - 2'
-      answer = gets.chomp.to_i
-      case answer
-      when 1
-        break unless player.bank > 0 && dealer.bank > 0
-        beginning_game
-        play_answer = game_menu
-        case play_answer
-        when 1
-          dealer_turn
-        when 2
-          player_turn
-        when 3
-          open_cards
-          winner
-        end
-      when 2
-        break
-      else
-        puts "#{player.name}, want to repeat?"
-        puts 'Yes - 1, No - 2'
-      end
-    end
-  end
-
-  private
 
   def beginning_game
     restart_game
@@ -97,13 +65,4 @@ class Game
       dealer.win(a)
     end
   end
-
-  def restart_game
-    @deck = Deck.new
-    player.cards = []
-    dealer.cards = []
-  end
-
-  game = Game.new
-  game.start_game
 end
