@@ -1,4 +1,8 @@
 class Card
+
+  SYMB = %w{+ <3 ^ <>}
+  SUITS = %w{A K Q J}
+  
   attr_reader :suit, :value
 
   def initialize(suit, value)
