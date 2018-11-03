@@ -1,42 +1,39 @@
-require 'forwardable'
 require_relative 'game'
+require_relative 'player'
 
 class TerminalInterface
-  extend Forwardable
+  attr_accessor :player, :dealer, :name
+  attr_reader :ti
 
-  def_delegators :@game, :bank, :player, :dealer, :beginning_game, :player_turn, :dealer_turn
-
-  attr_reader :game
-
-  def initialize(game)
-    @game = game
+  def initialize(ti)
+    @ti = ti
   end
 
   def start_game
     puts 'What is your name?'
-    player.name = gets.chomp
-    loop do
-      puts "Want to play in Black Jack, Mr. #{player.name}?"
+    ti.player.name = gets.chomp
+     loop do
+      puts "Want to play in Black Jack, Mr. #{ti.player.name}?"
       puts 'Yes - 1, No - 2'
       answer = gets.chomp.to_i
       case answer
       when 1
-        break unless player.bank > 0 && dealer.bank > 0
-        beginning_game
+        break unless ti.bank?
+        ti.beginning_game
         play_answer = game_menu
         case play_answer
         when 1
-          dealer_turn
+          ti.dealer_turn
         when 2
-          player_turn
+          ti.player_turn
         when 3
           open_cards
-          winner
+          congrats
         end
       when 2
         break
       else
-        puts "#{player.name}, want to repeat?"
+        puts "#{ti.player.name}, want to repeat?"
         puts 'Yes - 1, No - 2'
       end
     end
@@ -45,30 +42,25 @@ class TerminalInterface
   def game_menu
     puts 'Make a choice'
     puts '1 - Skip'
-    puts '2 - Add card' if player.total_cards < 3
+    puts '2 - Add card' if ti.total?
     puts '3 - Show cards'
     gets.chomp.to_i
   end
 
   def open_cards
-    puts "#{player.name} cards: #{player.cards * ' '}"
-    puts "#{dealer.name} cards: #{dealer.cards * ' '}"
-    puts "#{player.name} points is: #{player.points}"
-    puts "#{dealer.name} points is: #{dealer.points}"
+    puts "#{ti.player.name} cards: #{ti.player.cards * ' '}"
+    puts "#{ti.dealer.name} cards: #{ti.dealer.cards * ' '}"
+    puts "#{ti.player.name} points is: #{ti.player.points}"
+    puts "#{ti.dealer.name} points is: #{ti.dealer.points}"
   end
 
-  def winner
-    if dealer.the_end? || player.you_win?
-      puts "Congrats, #{player.name} - You Win!"
-      dealer.win(kassa.all)
-    elsif player.the_end? || dealer.you_win?
+  def congrats
+    if ti.winner
+      puts "Congrats, #{ti.player.name} - You Win!"
+    elsif ti.lose
       puts 'You lose!'
-      player.win(kassa.all)
     else
       puts 'Repeat please.'
-      a = kassa.all / 2
-      player.win(a)
-      dealer.win(a)
     end
   end
 end

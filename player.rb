@@ -4,7 +4,7 @@ class Player
   attr_accessor :cards, :name, :bank
   include Hand
 
-  def initialize(name)
+  def initialize(name, bank)
     @name = name
     @bank = bank
     @cards = []
