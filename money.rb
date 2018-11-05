@@ -10,6 +10,8 @@ class Money
   end
 
   def all
+    value = @value
     @value = 0
+    value
   end
 end
