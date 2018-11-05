@@ -3,7 +3,7 @@ require_relative 'player'
 
 class TerminalInterface
   attr_accessor :player, :dealer, :name
-  attr_reader :ti
+  attr_reader :ti, :kassa, :all
 
   def initialize(ti)
     @ti = ti
@@ -27,8 +27,8 @@ class TerminalInterface
         when 2
           ti.player_turn
         when 3
-          open_cards
-          congrats
+          ti.open_cards
+          ti.winner
         end
       when 2
         break
@@ -45,22 +45,5 @@ class TerminalInterface
     puts '2 - Add card' if ti.total?
     puts '3 - Show cards'
     gets.chomp.to_i
-  end
-
-  def open_cards
-    puts "#{ti.player.name} cards: #{ti.player.cards * ' '}"
-    puts "#{ti.dealer.name} cards: #{ti.dealer.cards * ' '}"
-    puts "#{ti.player.name} points is: #{ti.player.points}"
-    puts "#{ti.dealer.name} points is: #{ti.dealer.points}"
-  end
-
-  def congrats
-    if ti.winner
-      puts "Congrats, #{ti.player.name} - You Win!"
-    elsif ti.lose
-      puts 'You lose!'
-    else
-      puts 'Repeat please.'
-    end
   end
 end

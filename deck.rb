@@ -11,12 +11,9 @@ class Deck
 
   def create_cards
     cards = []
-    Card::SYMB.each do |suit|
-      (2..10).each do |number|
-        cards << Card.new(suit, number)
-      end
-      Card::SUITS.each do |namecard|
-        cards << Card.new(suit, namecard)
+    Card::SYMBS.each do |symb|
+      Card::SUITS.each do |suit|
+        cards << Card.new(symb, suit)
       end
     end
     cards.shuffle!
