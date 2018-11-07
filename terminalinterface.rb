@@ -3,7 +3,7 @@ require_relative 'player'
 
 class TerminalInterface
   attr_accessor :name
-  attr_reader :ti, :player, :dealer, :kassa, :all, :winner, :lose, :repeat, :open_cards
+  attr_reader :ti, :player, :dealer, :kassa, :all, :winner, :lose, :repeat, :open_cards, :show_cards, :cards
 
   def initialize(ti)
     @ti = ti
@@ -20,6 +20,8 @@ class TerminalInterface
       when 1
         break unless ti.bank?
         ti.beginning_game
+        puts ti.player.player_cards
+        puts ti.dealer.player_cards
         play_answer = game_menu
         case play_answer
         when 1

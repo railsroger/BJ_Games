@@ -21,8 +21,6 @@ class Game
     2.times { dealer.hit(@deck) }
     kassa.push(player.rate(10))
     kassa.push(dealer.rate(10))
-    player.show_cards
-    dealer.show_cards
   end
 
   def player_turn

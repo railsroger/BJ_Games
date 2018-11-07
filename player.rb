@@ -22,11 +22,11 @@ class Player
     cards.size
   end
 
-  def show_cards
+  def player_cards
     if name != 'Dealer'
-      puts "Player: #{name} cards: #{cards * ' '}"
+      "Player: #{name} cards: #{cards * ' '}"
     else
-      puts "Player: #{name} cards: #{cards.collect { |_card| _card = '*' } * ' '}"
+      "Player: #{name} cards: #{cards.collect { |_card| _card = '*' } * ' '}"
     end
   end
 end
